@@ -25,17 +25,43 @@ const estimateRecordCount = (fileSizeMB, averageRecordSize = 200) => {
 };
 
 const generateField = (prop) => {
-    const propNameLower = prop.name.toLowerCase();
-  
-    if (propNameLower === 'name' && prop.type === 'string') {
-      return faker.person.fullName();
-    } else if (propNameLower === 'email' && prop.type === 'email') {
-      return faker.internet.email();
-    } else if (propNameLower === 'phone' && prop.type === 'phone') {
-      return faker.phone.number();
-    }
-  
-    // Generic generators based on type
+  if (/name/.test(propNameLower) && prop.type === 'string') {
+    return faker.person.fullName();
+  } else if (/email/.test(propNameLower) && prop.type === 'email') {
+    return faker.internet.email();
+  } else if (/phone|contact/.test(propNameLower) && prop.type === 'phone') {
+    return faker.phone.number();
+  } else if (/gender/.test(propNameLower) && prop.type === 'string') {
+    return faker.person.sexType();
+  } else if (/city/.test(propNameLower) && prop.type === 'string') {
+    return faker.location.city();
+  } else if (/state/.test(propNameLower) && prop.type === 'string') {
+    return faker.location.state();
+  } else if (/address/.test(propNameLower) && prop.type === 'string') {
+    return faker.location.streetAddress();
+  } else if (/country/.test(propNameLower) && prop.type === 'string') {
+    return faker.location.country();
+  } else if (/zip|postal/.test(propNameLower) && prop.type === 'string') {
+    return faker.location.zipCode();
+  } else if (/company/.test(propNameLower) && prop.type === 'string') {
+    return faker.company.name();
+  } else if (/date|dob/.test(propNameLower) && prop.type === 'date') {
+    return faker.date.birthdate();
+  } else if (/id|uuid/.test(propNameLower)) {
+    return faker.string.uuid();
+  } else if (/salary|income/.test(propNameLower) && prop.type === 'number') {
+    return faker.finance.amount(30000, 150000, 2, '$');
+  } else if (/age/.test(propNameLower) && prop.type === 'number') {
+    return faker.number.int({ min: 18, max: 80 });
+  } else if (/description|bio/.test(propNameLower) && prop.type === 'string') {
+    return faker.lorem.sentences(2);
+  } else if (/url|website/.test(propNameLower) && prop.type === 'string') {
+    return faker.internet.url();
+  } else if (/image|avatar/.test(propNameLower) && prop.type === 'string') {
+    return faker.image.avatar();
+  }else {
+  }
+     
     switch (prop.type) {
       case 'string':
         return faker.lorem.word();
