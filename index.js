@@ -273,6 +273,10 @@ app.post('/api/generate', async (req, res) => {
   }
 });
 
+app.get("/test",(req,res)=>{
+   res.json({message:"Hello World!"});
+})
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
