@@ -25,6 +25,7 @@ const estimateRecordCount = (fileSizeMB, averageRecordSize = 200) => {
 };
 
 const generateField = (prop) => {
+   const propNameLower = prop.name.toLowerCase();
   if (/name/.test(propNameLower) && prop.type === 'string') {
     return faker.person.fullName();
   } else if (/email/.test(propNameLower) && prop.type === 'email') {
