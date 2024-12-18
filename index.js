@@ -24,14 +24,16 @@ const estimateRecordCount = (fileSizeMB, averageRecordSize = 200) => {
   return Math.floor(bytes / averageRecordSize);
 };
 
+
 const generateField = (prop) => {
   const propNameLower = prop.name.toLowerCase();
-
   // Accurate regex with word boundaries
   if (/\bname\b/i.test(propNameLower)) {
     return faker.person.fullName();
   } else if (/\bemail\b/i.test(propNameLower)) {
     return faker.internet.email();
+  } else if (/\education\b/i.test(propNameLower)) {
+    return faker.helpers.randomize(educationLevels);;
   } else if (/\b(phone|contact)\b/i.test(propNameLower)) {
     return faker.phone.number();
   } else if (/\bgender\b/i.test(propNameLower)) {
@@ -303,7 +305,7 @@ app.post('/api/generate', async (req, res) => {
 });
 
 app.get("/test",(req,res)=>{
-   res.json({message:"Hello World!"});
+   res.json({message:"Hello World! This is md"});
 })
 
 app.listen(PORT, () => {
