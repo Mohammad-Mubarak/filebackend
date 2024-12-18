@@ -19,6 +19,11 @@ const educationLevels = [
   "Professional Certification"
 ];
 
+const getRandomEducationLevel = () => {
+  const randomIndex = Math.floor(Math.random() * educationLevels.length);
+  return educationLevels[randomIndex];
+};
+
 const estimateRecordCount = (fileSizeMB, averageRecordSize = 200) => {
   const bytes = fileSizeMB * 1024 * 1024;
   return Math.floor(bytes / averageRecordSize);
@@ -33,7 +38,7 @@ const generateField = (prop) => {
   } else if (/\bemail\b/i.test(propNameLower)) {
     return faker.internet.email();
   } else if (/\education\b/i.test(propNameLower)) {
-    return faker.helpers.randomize(educationLevels);;
+    return getRandomEducationLevel();
   } else if (/\b(phone|contact)\b/i.test(propNameLower)) {
     return faker.phone.number();
   } else if (/\bgender\b/i.test(propNameLower)) {
