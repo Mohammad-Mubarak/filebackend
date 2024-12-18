@@ -25,44 +25,44 @@ const estimateRecordCount = (fileSizeMB, averageRecordSize = 200) => {
 };
 
 const generateField = (prop) => {
-   const propNameLower = prop.name.toLowerCase();
-  if (/name/.test(propNameLower) && prop.type === 'string') {
+  const propNameLower = prop.name.toLowerCase();
+
+  // Accurate regex with word boundaries
+  if (/\bname\b/i.test(propNameLower)) {
     return faker.person.fullName();
-  } else if (/email/.test(propNameLower) && prop.type === 'email') {
+  } else if (/\bemail\b/i.test(propNameLower)) {
     return faker.internet.email();
-  } else if (/phone|contact/.test(propNameLower) && prop.type === 'phone') {
+  } else if (/\b(phone|contact)\b/i.test(propNameLower)) {
     return faker.phone.number();
-  } else if (/gender/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\bgender\b/i.test(propNameLower)) {
     return faker.person.sexType();
-  } else if (/city/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\bcity\b/i.test(propNameLower)) {
     return faker.location.city();
-  } else if (/state/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\bstate\b/i.test(propNameLower)) {
     return faker.location.state();
-  } else if (/address/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\baddress\b/i.test(propNameLower)) {
     return faker.location.streetAddress();
-  } else if (/country/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\bcountry\b/i.test(propNameLower)) {
     return faker.location.country();
-  } else if (/zip|postal/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\b(zip|postal)\b/i.test(propNameLower)) {
     return faker.location.zipCode();
-  } else if (/company/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\bcompany\b/i.test(propNameLower)) {
     return faker.company.name();
-  } else if (/date|dob/.test(propNameLower) && prop.type === 'date') {
+  } else if (/\b(date|dob)\b/i.test(propNameLower)) {
     return faker.date.birthdate();
-  } else if (/id|uuid/.test(propNameLower)) {
+  } else if (/\b(id|uuid)\b/i.test(propNameLower)) {
     return faker.string.uuid();
-  } else if (/salary|income/.test(propNameLower) && prop.type === 'number') {
+  } else if (/\b(salary|income)\b/i.test(propNameLower)) {
     return faker.finance.amount(30000, 150000, 2, '$');
-  } else if (/age/.test(propNameLower) && prop.type === 'number') {
+  } else if (/\bage\b/i.test(propNameLower)) {
     return faker.number.int({ min: 18, max: 80 });
-  } else if (/description|bio/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\b(description|bio)\b/i.test(propNameLower)) {
     return faker.lorem.sentences(2);
-  } else if (/url|website/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\b(url|website)\b/i.test(propNameLower)) {
     return faker.internet.url();
-  } else if (/image|avatar/.test(propNameLower) && prop.type === 'string') {
+  } else if (/\b(image|avatar)\b/i.test(propNameLower)) {
     return faker.image.avatar();
-  }else {
-  }
-     
+  } else {
     switch (prop.type) {
       case 'string':
         return faker.lorem.word();
@@ -75,11 +75,13 @@ const generateField = (prop) => {
       case 'address':
         return faker.location.streetAddress();
       case 'uuid':
-        return uuidv4();
+        return faker.string.uuid();
       default:
         return '';
     }
-  };
+  }
+};
+
   
 const generateRecord = (properties) => {
     const record = {};
